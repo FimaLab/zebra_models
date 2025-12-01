@@ -95,7 +95,7 @@ if uploaded:
             "Кардио": cardio_score,
             "Нейро": neuro_score,
             "Гепато": hepato_score,
-            "Общая": total
+            "Сумма": total
         })
 
     # === выводим Heatmap-таблицу ===
@@ -124,7 +124,7 @@ if uploaded:
             return "background-color: #ffb3b3;"   # красный
 
     styled = df_res.style.applymap(color_toxic, subset=["Кардио", "Нейро", "Гепато"]) \
-                        .applymap(color_total, subset=["Общая"])
+                        .applymap(color_total, subset=["Сумма"])
 
     col_table, col_legend = st.columns([4, 1])
 
@@ -133,10 +133,10 @@ if uploaded:
 
     with col_legend:
         st.markdown("""
-        <div style="margin-left:10px; padding:10px; border:1px solid #ccc; border-radius:8px; width:180px;">
+        <div style="margin-left:10px; padding:10px; border:1px solid #ccc; border-radius:8px; width:200px;">
         <b>Шкала токсичности</b><br><br>
 
-        <b>Частные токсичности (0–10)</b><br>
+        <b>Органоспецифическая токсичность (0–10)</b>
         <div style="height:12px; background:linear-gradient(to right, #c9f7c9, #fff6a5, #ffb3b3);"></div>
         <div style="display:flex; justify-content:space-between; font-size:12px; margin-top:2px;">
         <span>0</span><span>6</span><span>8</span><span>10</span>
@@ -145,9 +145,9 @@ if uploaded:
             <div style="white-space:nowrap;">0 — нетоксичен</div>
             <div style="white-space:nowrap;">10 — наиболее токсичен</div>
         </div>
-        <br><br>
-
-        <b>Общая токсичность (0–30)</b><br>
+        <div style="margin-top: 20px;"></div>
+        <b>Суммарная органотоксичность <br>(0–30)</b>
+        <div style="margin-top: 20px;"></div>
         <div style="height:12px; background:linear-gradient(to right, #c9f7c9, #fff6a5, #ffb3b3);"></div>
         <div style="display:flex; justify-content:space-between; font-size:12px; margin-top:2px;">
         <span>0</span><span>10</span><span>18</span><span>30</span>
