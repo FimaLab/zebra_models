@@ -87,15 +87,13 @@ if uploaded:
         cardio_score = proba_to_score(cardio_p)
         neuro_score  = proba_to_score(neuro_p)
         hepato_score = proba_to_score(hepato_p)
-        total = cardio_score + neuro_score + hepato_score
 
         # === добавляем в таблицу ===
         results.append({
             "Препарат": drug,
             "Кардио": cardio_score,
             "Нейро": neuro_score,
-            "Гепато": hepato_score,
-            "Сумма": total
+            "Гепато": hepato_score
         })
 
     # === выводим Heatmap-таблицу ===
@@ -114,17 +112,10 @@ if uploaded:
         else:
             return "background-color: #ffb3b3;"   # красный
 
-    def color_total(val):
-        """Окраска для общей токсичности 0–30."""
-        if val < 10:
-            return "background-color: #c9f7c9;"   # зелёный
-        elif val < 18:
-            return "background-color: #fff6a5;"   # жёлтый
-        else:
-            return "background-color: #ffb3b3;"   # красный
-
-    styled = df_res.style.applymap(color_toxic, subset=["Кардио", "Нейро", "Гепато"]) \
-                        .applymap(color_total, subset=["Сумма"])
+    styled = df_res.style.applymap(
+        color_toxic,
+        subset=["Кардио", "Нейро", "Гепато"]
+    )
 
     col_table, col_legend = st.columns([4, 1])
 
@@ -144,17 +135,6 @@ if uploaded:
         <div style="font-size:11px; color:#555; line-height:1.2; margin-top:2px;">
             <div style="white-space:nowrap;">0 — нетоксичен</div>
             <div style="white-space:nowrap;">10 — наиболее токсичен</div>
-        </div>
-        <div style="margin-top: 20px;"></div>
-        <b>Суммарная органотоксичность <br>(0–30)</b>
-        <div style="margin-top: 20px;"></div>
-        <div style="height:12px; background:linear-gradient(to right, #c9f7c9, #fff6a5, #ffb3b3);"></div>
-        <div style="display:flex; justify-content:space-between; font-size:12px; margin-top:2px;">
-        <span>0</span><span>10</span><span>18</span><span>30</span>
-        </div>
-        <div style="font-size:11px; color:#555; line-height:1.2; margin-top:2px;">
-            <div style="white-space:nowrap;">0 — нетоксичен</div>
-            <div style="white-space:nowrap;">30 — наиболее токсичен</div>
         </div>
         </div>
 
